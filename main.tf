@@ -9,17 +9,23 @@ locals {
   }
 
   default_data_node = merge(local.default_mongod_node, {
-    mongod_port    = var.sharded ? var.sharded_mongod_port : var.mongod_port
-    mongos_port    = var.sharded && var.cohost_routers ? var.mongos_port : null
-    image_id       = var.image_id
-    instance_type  = var.instance_type
-    is_router_node = var.cohost_routers
+    mongod_port        = var.sharded ? var.sharded_mongod_port : var.mongod_port
+    mongos_port        = var.sharded && var.cohost_routers ? var.mongos_port : null
+    image_id           = var.image_id
+    instance_type      = var.instance_type
+    is_router_node     = var.cohost_routers
+    volume_type        = var.data_block_device_volume_type
+    volume_size        = var.data_block_device_volume_size
+    volume_iops        = var.data_block_device_iops
   })
 
   default_config_node = merge(local.default_mongod_node, {
-    mongod_port    = var.config_mongod_port
-    image_id       = coalesce(var.config_image_id, var.image_id)
-    instance_type  = coalesce(var.config_instance_type, var.instance_type)
+    mongod_port        = var.config_mongod_port
+    image_id           = coalesce(var.config_image_id, var.image_id)
+    instance_type      = coalesce(var.config_instance_type, var.instance_type)
+    volume_type        = var.config_block_device_volume_type
+    volume_size        = var.config_block_device_volume_size
+    volume_iops        = var.config_block_device_iops
   })
 
   default_router_node = {
