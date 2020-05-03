@@ -10,7 +10,7 @@ locals {
 
   default_data_node = merge(local.default_mongod_node, {
     mongod_port    = var.sharded ? var.sharded_mongod_port : var.mongod_port
-    mongos_port    = var.cohost_routers ? var.mongos_port : null
+    mongos_port    = var.sharded && var.cohost_routers ? var.mongos_port : null
     image_id       = var.image_id
     instance_type  = var.instance_type
     is_router_node = var.cohost_routers
@@ -47,7 +47,7 @@ locals {
     })]
   }
 
-  router_nodes = [ for i in range (var.cohost_routers ? 0 : var.router_count) : merge(local.default_router_node, {
+  router_nodes = [ for i in range (var.sharded && var.cohost_routers ? 0 : var.router_count) : merge(local.default_router_node, {
       name     = format("%s-router-%02d", var.name, i)
       hostname = format("%s-router-%02d.%s", var.name, i, var.domain_name)
   })]

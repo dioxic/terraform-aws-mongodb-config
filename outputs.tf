@@ -2,7 +2,7 @@ output "data_replica_sets" {
   value = local.data_replica_sets
 }
 
-output "config_replica_sets" {
+output "config_replica_set" {
   value = local.config_replica_set
 }
 
