@@ -39,17 +39,17 @@ locals {
     }
   ]
 
-  config_replica_set = {
+  config_replica_set = var.sharded ? {
     name        = format("%s-config", var.name)
     nodes       = [ for i in range (var.member_count) : merge(local.default_config_node, {
       name     = format("%s-config-%02d", var.name, i)
       hostname = format("%s-config-%02d.%s", var.name, i, var.domain_name)
     })]
-  }
+  } : null
 
-  router_nodes = [ for i in range (var.sharded && var.cohost_routers ? 0 : var.router_count) : merge(local.default_router_node, {
+  router_nodes = var.sharded && !var.cohost_routers ? [ for i in range (var.router_count) : merge(local.default_router_node, {
       name     = format("%s-router-%02d", var.name, i)
       hostname = format("%s-router-%02d.%s", var.name, i, var.domain_name)
-  })]
+  })] : null
 
 }
