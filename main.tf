@@ -30,8 +30,8 @@ locals {
 
   data_replica_sets = [
     for i in range(var.sharded ? var.shard_count : 1) : {
-      name        = format("%s-shard-%02d", var.name, i)
-      shard_name  = format("shard%d", i)
+      name        = var.sharded ? format("%s-shard-%02d", var.name, i) : "${var.name}-rs"
+      shard_name  = var.sharded ? format("shard%d", i) : null
       nodes       = [ for j in range (var.member_count) : merge(local.default_data_node, {
         name     = format("%s-shard-%02d-%02d", var.name, i, j)
         hostname = format("%s-shard-%02d-%02d.%s", var.name, i, j, var.domain_name)
