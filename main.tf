@@ -39,7 +39,7 @@ locals {
       shard_name  = var.sharded ? format("shard%d", i) : null
       nodes       = [ for j in range (var.member_count) : merge(local.default_data_node, {
         name     = format("%s-shard-%02d-%02d", var.name, i, j)
-        hostname = format("%s-shard-%02d-%02d.%s", var.name, i, j, var.domain_name)
+        fqdn     = format("%s-shard-%02d-%02d.%s", var.name, i, j, var.domain_name)
       })]
     }
   ]
@@ -48,13 +48,13 @@ locals {
     name        = format("%s-config", var.name)
     nodes       = [ for i in range (var.member_count) : merge(local.default_config_node, {
       name     = format("%s-config-%02d", var.name, i)
-      hostname = format("%s-config-%02d.%s", var.name, i, var.domain_name)
+      fqdn     = format("%s-config-%02d.%s", var.name, i, var.domain_name)
     })]
   } : null
 
   router_nodes = var.sharded && !var.cohost_routers ? [ for i in range (var.router_count) : merge(local.default_router_node, {
       name     = format("%s-router-%02d", var.name, i)
-      hostname = format("%s-router-%02d.%s", var.name, i, var.domain_name)
+      fqdn     = format("%s-router-%02d.%s", var.name, i, var.domain_name)
   })] : null
 
 }
