@@ -9,7 +9,6 @@ module "config" {
   name = "markbm"
   image_id = "ami-06ce3edf0cff21f07"
   instance_type = "t2.micro"
-  domain_name = "example.com"
 }
 
 output "data_replica_sets" {

@@ -3,10 +3,6 @@ variable "name" {
   description = "The cluster name. Required."
 }
 
-variable "domain_name" {
-  description = "The domain name for the cluster config. Required."
-}
-
 variable "config_mongod_port" {
   description = "mongod port for config server, defaults to `27019`."
   type        = number
