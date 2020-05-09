@@ -39,7 +39,7 @@ locals {
       var.sharded ? format("%s-shard-%02d", var.name, i) : "${var.name}-rs" => {
         shard_name    = var.sharded ? format("shard%d", i) : null
         config_server = false
-        nodes         = [ for j in range (var.member_count) : merge(local.default_data_node, {
+        members       = [ for j in range (var.member_count) : merge(local.default_data_node, {
           name          = format("%s-shard-%02d-%02d", var.name, i, j)
         })]
       }
@@ -49,7 +49,7 @@ locals {
     format("%s-config", var.name) = {
       shard_name    = null
       config_server = true
-      nodes         = [ for i in range (var.member_count) : merge(local.default_config_node, {
+      members       = [ for i in range (var.member_count) : merge(local.default_config_node, {
         name          = format("%s-config-%02d", var.name, i)
       })]
     }
