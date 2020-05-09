@@ -59,6 +59,6 @@ locals {
 
   router_nodes = var.sharded && !var.cohost_routers ? [ for i in range (var.router_count) : merge(local.default_router_node, {
       name     = format("%s-router-%02d", var.name, i)
-  })] : null
+  })] : []
 
 }
