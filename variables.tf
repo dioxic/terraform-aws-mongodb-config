@@ -28,13 +28,21 @@ variable "mongos_port" {
 }
 
 variable "shard_count" {
-  type    = number
-  default = 1
+  description = "The number of shards, defaults to `1`."
+  type        = number
+  default     = 1
 }
 
 variable "member_count" {
+  description = "The number of members for each replica set, defaults to `3`."
   type    = number
   default = 3
+}
+
+variable "config_member_count" {
+  description = "The number of members for the config server replica set, defaults to `member_count`."
+  type    = number
+  default = null
 }
 
 variable "sharded" {

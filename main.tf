@@ -49,7 +49,7 @@ locals {
     format("%s-config", var.name) = {
       shard_name    = null
       config_server = true
-      members       = [ for i in range (var.member_count) : merge(local.default_config_node, {
+      members       = [ for i in range (coalesce(var.config_member_count, var.member_count)) : merge(local.default_config_node, {
         name          = format("%s-config-%02d", var.name, i)
       })]
     }
